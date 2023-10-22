@@ -6,12 +6,12 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
+    <width>580</width>
     <height>560</height>
    </rect>
   </property>
   <property name="windowTitle">
-   <string>MainWindow</string>
+   <string>You Loader</string>
   </property>
   <property name="toolTipDuration">
    <number>2</number>
@@ -384,7 +384,7 @@
             </property>
             <property name="maximumSize">
              <size>
-              <width>120</width>
+              <width>400</width>
               <height>20</height>
              </size>
             </property>
@@ -416,7 +416,7 @@
             </property>
             <property name="maximumSize">
              <size>
-              <width>120</width>
+              <width>400</width>
               <height>20</height>
              </size>
             </property>
@@ -490,7 +490,7 @@
             </property>
             <property name="maximumSize">
              <size>
-              <width>120</width>
+              <width>400</width>
               <height>20</height>
              </size>
             </property>
@@ -522,7 +522,7 @@
             </property>
             <property name="maximumSize">
              <size>
-              <width>120</width>
+              <width>400</width>
               <height>20</height>
              </size>
             </property>
@@ -596,7 +596,7 @@
             </property>
             <property name="maximumSize">
              <size>
-              <width>120</width>
+              <width>400</width>
               <height>20</height>
              </size>
             </property>
@@ -628,7 +628,7 @@
             </property>
             <property name="maximumSize">
              <size>
-              <width>120</width>
+              <width>400</width>
               <height>20</height>
              </size>
             </property>
@@ -764,7 +764,7 @@
           </property>
           <property name="maximumSize">
            <size>
-            <width>400</width>
+            <width>600</width>
             <height>20</height>
            </size>
           </property>
@@ -834,6 +834,12 @@
           <property name="toolTip">
            <string>Количество загружаемых и загруженных файлов</string>
           </property>
+          <property name="text">
+           <string>0 / 0</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
+          </property>
           <property name="readOnly">
            <bool>true</bool>
           </property>
@@ -859,8 +865,11 @@
           <property name="value">
            <number>0</number>
           </property>
+          <property name="alignment">
+           <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+          </property>
           <property name="textVisible">
-           <bool>false</bool>
+           <bool>true</bool>
           </property>
           <property name="orientation">
            <enum>Qt::Horizontal</enum>
@@ -869,7 +878,7 @@
            <bool>false</bool>
           </property>
           <property name="textDirection">
-           <enum>QProgressBar::TopToBottom</enum>
+           <enum>QProgressBar::BottomToTop</enum>
           </property>
           <property name="format">
            <string>%p%</string>
@@ -880,7 +889,7 @@
          <widget class="QLineEdit" name="remaining_time_line">
           <property name="minimumSize">
            <size>
-            <width>80</width>
+            <width>100</width>
             <height>20</height>
            </size>
           </property>
@@ -891,7 +900,13 @@
            </size>
           </property>
           <property name="toolTip">
-           <string>Оставшиеся время до полной загрузки файла(ов)</string>
+           <string>Оставшиеся время до полной загрузки файла</string>
+          </property>
+          <property name="text">
+           <string>0 мин. 0 сек.</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
           <property name="readOnly">
            <bool>true</bool>
@@ -914,6 +929,12 @@
           </property>
           <property name="toolTip">
            <string>Примерная скорость загрузки файла</string>
+          </property>
+          <property name="text">
+           <string>0 мб./сек.</string>
+          </property>
+          <property name="alignment">
+           <set>Qt::AlignCenter</set>
           </property>
           <property name="readOnly">
            <bool>true</bool>
@@ -1241,7 +1262,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>600</width>
+     <width>580</width>
      <height>21</height>
     </rect>
    </property>
@@ -1274,7 +1295,7 @@
  <resources/>
  <connections/>
  <buttongroups>
-  <buttongroup name="download_type"/>
   <buttongroup name="download_format"/>
+  <buttongroup name="download_type"/>
  </buttongroups>
 </ui>

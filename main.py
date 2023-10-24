@@ -1,5 +1,7 @@
 import shutil
 from sys import exit, argv
+from tinytag import TinyTag
+
 
 import requests
 from PyQt5 import uic, QtCore, QtWidgets
@@ -86,13 +88,22 @@ class YouLoader(QMainWindow):
             self.clear_qualities()
 
     def adding_qualities_video(self) -> None:
-        streams = YouTube(self.link_line.text()).streams.filter(progressive=True, type='video')
-        self.quality_box.addItems([stream.resolution for stream in streams])
+        if self.format_status == 'video':
+            streams = YouTube(self.link_line.text()).streams.filter(progressive=True, type=self.format_status)
+            self.quality_box.addItems([stream.resolution for stream in streams])
+        elif self.format_status == 'audio':
+            streams = YouTube(self.link_line.text()).streams.filter(type=self.format_status)
+            self.quality_box.addItems([stream.abr for stream in streams])
+
 
 
     def adding_qualities_playlist(self) -> None:
-        streams = Playlist(self.link_line.text()).videos[0].streams.filter(progressive=True, type='video')
-        self.quality_box.addItems([stream.resolution for stream in streams])
+        if self.format_status == 'video':
+            streams = Playlist(self.link_line.text()).videos[0].streams.filter(progressive=True, type=self.format_status)
+            self.quality_box.addItems([stream.resolution for stream in streams])
+        elif self.format_status == 'audio':
+            streams = Playlist(self.link_line.text()).videos[0].streams.filter(type=self.format_status)
+            self.quality_box.addItems([stream.abr for stream in streams])
 
     def clear_qualities(self) -> None:
         self.quality_box.clear()
@@ -200,6 +211,14 @@ class YouLoader(QMainWindow):
         self.p_progress = 0
         self.internet_speed_line.setText('0 мб./сек.')
         self.remaining_time_line.setText('0 мин. 0 сек.')
+        # in the future
+        # tag = TinyTag.get(path)
+        # tags_text = [self.tag_line_1, self.tag_line_2, self.tag_line_3, self.tag_line_4, self.tag_line_5, self.tag_line_6]
+        # tags = [self.tags_box_1, self.tags_box_2, self.tags_box_3, self.tags_box_4, self.tags_box_5, self.tags_box_6]
+        # for text, tag_box in zip(tags_text, tags):
+        #     if text.text():
+        #         tag.
+
 
     def on_complete_playlist(self, stream, path):
         line = self.quality_line.text().split(' / ')
@@ -217,8 +236,14 @@ class YouLoader(QMainWindow):
             video = YouTube(self.link_line.text())
             video.register_on_progress_callback(self.on_progress)
             video.register_on_complete_callback(self.on_complete_video)
-            stream = video.streams.filter(progressive=True, resolution=self.quality_box.currentText(), type='video')
-            stream[0].download(output_path=self.path_line.text())
+            if self.format_status == 'video':
+                stream = video.streams.filter(progressive=True, resolution=self.quality_box.currentText(), type=self.format_status)
+                stream[0].download(output_path=self.path_line.text())
+            elif self.format_status == 'audio':
+                stream = video.streams.filter(progressive=False, abr=self.quality_box.currentText(), type=self.format_status)
+                print(stream)
+
+                stream[0].download(output_path=self.path_line.text())
 
         elif self.type_status == 'playlist':
             playlist = Playlist(self.link_line.text())
@@ -226,9 +251,17 @@ class YouLoader(QMainWindow):
             for video in [YouTube(link) for link in playlist]:
                 video.register_on_progress_callback(self.on_progress)
                 video.register_on_complete_callback(self.on_complete_playlist)
-                stream = video.streams.filter(progressive=True, resolution=self.quality_box.currentText(), type='video')
                 self.count_one += 1
-                stream[0].download(output_path=self.path_line.text())
+                if self.format_status == 'video':
+                    stream = video.streams.filter(progressive=True, resolution=self.quality_box.currentText(),
+                                                  type=self.format_status)
+                    stream[0].download(output_path=self.path_line.text())
+                elif self.format_status == 'audio':
+                    stream = video.streams.filter(progressive=False, abr=self.quality_box.currentText(),
+                                                  type=self.format_status)
+                    print(stream)
+                    stream[0].download(output_path=self.path_line.text())
+
 
     def custom_hook(self, error):
         print(error)

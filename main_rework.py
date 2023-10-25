@@ -1,21 +1,27 @@
 import threading
+import pytube.exceptions as exceptions
+
 from sys import exit, argv
 from time import sleep
-
+from requests import get
+from shutil import copyfileobj
+from json_reader import JsonReader
 from PyQt5 import uic, QtCore, QtWidgets
-from PyQt5.QtGui import QGuiApplication
+from PyQt5.QtGui import QGuiApplication, QImage, QPixmap
 from PyQt5.QtWidgets import QApplication, QMainWindow
 from pytube import YouTube, Playlist
-import pytube.exceptions as exceptions
+from datetime import datetime
 
 
 class YoTuViLo(QMainWindow):
     def __init__(self) -> None:
         super().__init__()
         uic.loadUi('design_cool_rework.ui', self)
+        self.TEST_FLAG = True
         self.errors_box = []
+        self.errors_presets = JsonReader().read_file('errors_presets.json')
         self.flags_box = {'li_in_fl': True}
-        self.file_characteristic = {'url': '', 'type': 'video', 'format': 'video'}
+        self.file_characteristic = {'url': '', 'type': 'видео', 'format': 'видео'}
         self.paste_button.clicked.connect(self.paste_string)
         self.copy_button.clicked.connect(self.copy_string)
         self.type_box.currentTextChanged.connect(self.set_type)
@@ -32,7 +38,7 @@ class YoTuViLo(QMainWindow):
                 try:
                     function(self, *args, **kwargs)
                 except Exception as error:
-                    print(f'{type(error).__name__.title()} - {error}')
+                    self.test_print(f'{type(error).__name__.title()} - {error}')
                     self.errors_box.append(f'{type(error).__name__.title()} - {error}')
                 self.flags_box[flag_name] = True
 
@@ -45,10 +51,10 @@ class YoTuViLo(QMainWindow):
             try:
                 function(self, *args, **kwargs)
             except AssertionError as error:
-                print(f'{type(error).__name__.title()} - {error}')
+                self.test_print(f'{type(error).__name__.title()} - {error}')
                 self.errors_box.append(f'{type(error).__name__.title()} - {error}')
             except Exception as error:
-                print(f'{type(error).__name__.title()} - {error}')
+                self.test_print(f'{type(error).__name__.title()} - {error}')
                 self.errors_box.append(f'{type(error).__name__.title()} - {error}')
 
         return error_inspector
@@ -58,10 +64,10 @@ class YoTuViLo(QMainWindow):
             try:
                 function(self)
             except AssertionError as error:
-                print(f'{type(error).__name__.title()} - {error}')
+                self.test_print(f'{type(error).__name__.title()} - {error}')
                 self.errors_box.append(f'{type(error).__name__.title()} - {error}')
             except Exception as error:
-                print(f'{type(error).__name__.title()} - {error}')
+                self.test_print(f'{type(error).__name__.title()} - {error}')
                 self.errors_box.append(f'{type(error).__name__.title()} - {error}')
 
         return error_inspector
@@ -70,19 +76,19 @@ class YoTuViLo(QMainWindow):
 
     def set_type(self):
         self.file_characteristic['type'] = self.type_box.currentText()
-        print(self.file_characteristic['type'])
+        self.test_print(self.file_characteristic['type'])
 
     def set_format(self):
         self.file_characteristic['format'] = self.format_box.currentText()
-        print(self.file_characteristic['format'])
+        self.test_print(self.file_characteristic['format'])
 
     def set_url(self):
         self.file_characteristic['url'] = self.link_line.text()
-        print(self.file_characteristic['url'])
+        self.test_print(self.file_characteristic['url'])
 
     def clear_url(self):
         self.file_characteristic['url'] = ''
-        print(self.file_characteristic['url'])
+        self.test_print(self.file_characteristic['url'])
 
     def set_text(self, text: str, color: str):
         self.link_line_accuracy.setText(text)
@@ -106,28 +112,36 @@ class YoTuViLo(QMainWindow):
         clipboard = QGuiApplication.clipboard()
         clipboard.setText(link_string)
 
-    @_error_inspector_flag_block('li_in_fl')
+    @_error_inspector_args
     def line_inspector_process(self, link: str):
         try:
             self.type_box.setEnabled(False)
             self.paste_button.setEnabled(False)
-            self.work_test() # 5 секунд отдыха
-            if self.file_characteristic['type'] == 'video':
+            # self.work_test() # 5 секунд отдыха
+            if self.file_characteristic['type'] == 'видео':
                 assert YouTube(link)
                 YouTube(link).check_availability()
-            elif self.file_characteristic['type'] == 'playlist':
+            elif self.file_characteristic['type'] == 'плэйлист':
                 assert Playlist(link)
             self.set_text('Верный формат ссылки', 'green')
+            self.set_url()
+            self.flags_box['li_in_fl'] = True
+            self.display_metadata_thread()
         except Exception as error:
-            error_text = 'Неверный формат ссылки'
-            self.set_text(error_text, 'red')
-            raise error
-        finally:
             self.type_box.setEnabled(True)
             self.paste_button.setEnabled(True)
+            self.set_text(self.errors_presets.get(type(error).__name__, type(Exception()).__name__), 'red')
+            self.clear_url()
+            self.description_clear()
+            self.preview_clear()
+            raise error
+        finally:
+            self.flags_box['li_in_fl'] = True
+
 
     def line_inspector_thread(self):
         if bool(self.flags_box['li_in_fl']):
+            self.flags_box['li_in_fl'] = False
             thread = threading.Thread(name='line_inspector_thread', target=self.line_inspector_process,
                                       args=(self.link_line.text(),))
             thread.start()
@@ -140,10 +154,74 @@ class YoTuViLo(QMainWindow):
 
     '''description_and_preview_layout sector'''
 
-
     @_error_inspector
     def display_metadata_process(self):
-        pass
+        if self.file_characteristic['type'] == 'видео':
+            self.download_url()
+            self.preview_set()
+            self.description_video_set()
+        elif self.file_characteristic['type'] == 'плэйлист':
+            self.description_playlist_set()
+        self.type_box.setEnabled(True)
+        self.paste_button.setEnabled(True)
+
+    @_error_inspector
+    def download_url(self):
+        response = get(YouTube(self.file_characteristic['url']).thumbnail_url, stream=True)
+        with open('video_preview.png', 'wb') as out_file:
+            copyfileobj(response.raw, out_file)
+        del response
+
+    @_error_inspector
+    def preview_set(self):
+        video_preview = QImage('video_preview.png')
+        width = video_preview.width()
+        height = video_preview.height()
+
+        if width > height:
+            video_preview_size = [150, int(f'{height / (width / 150):.0f}')]
+        elif width < height:
+            video_preview_size = [int(f'{width / (height / 150):.0f}'), 150]
+        else:
+            video_preview_size = [150, 150]
+
+        self.image_label.setPixmap(QPixmap.fromImage(video_preview).scaled(*video_preview_size))
+
+    def preview_clear(self):
+        self.image_label.clear()
+
+    @_error_inspector
+    def description_video_set(self):
+        video = YouTube(self.file_characteristic['url'])
+        self.title_line.setText(video.title)
+        self.author_line.setText(video.author)
+        self.additional_label_1.setText('Длина в сек.:')
+        self.additional_line_1.setText(str(video.length))
+        self.additional_label_2.setText('Дата загрузки:')
+        format = '%d.%m.%y'
+        self.additional_line_2.setText(video.publish_date.strftime(format))
+
+    @_error_inspector
+    def description_playlist_set(self):
+        self.preview_clear()
+        playlist = Playlist(self.file_characteristic['url'])
+        self.title_line.setText(playlist.title)
+        self.author_line.setText(playlist.owner)
+        self.additional_label_1.setText('Количество:')
+        self.additional_line_1.setText(str(playlist.length))
+        self.additional_label_2.setText('Просмотры:')
+        try:
+            self.additional_line_2.setText(str(playlist.views))
+        except ValueError:
+            self.additional_line_2.setText(str(0))
+
+    def description_clear(self):
+        self.title_line.clear()
+        self.author_line.clear()
+        self.additional_label_1.setText('Доп. линия:')
+        self.additional_line_1.clear()
+        self.additional_label_2.setText('Доп. линия:')
+        self.additional_line_2.clear()
 
     def display_metadata_thread(self):
         if bool(self.flags_box['li_in_fl']) and bool(self.file_characteristic['url']):
@@ -152,8 +230,9 @@ class YoTuViLo(QMainWindow):
 
     """statusBar sector"""
 
-    # TODO из self.display_metadata_process() выводить сообщения о ошибках в видео
-
+    def test_print(self, text):
+        if self.TEST_FLAG:
+            print(text)
 
     def work_test(self):
         sleep(5)

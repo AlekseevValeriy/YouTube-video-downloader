@@ -1,6 +1,5 @@
-import pytube.exceptions as exceptions
-
 try:
-    raise exceptions.VideoPrivate(video_id='')
+    a = 1
+    assert a in [2]
 except Exception as e:
-    print(type(e).__name__)
+    print(type(Exception()).__name__)

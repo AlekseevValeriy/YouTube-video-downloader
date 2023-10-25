@@ -1272,7 +1272,7 @@
              </font>
             </property>
             <property name="toolTip">
-             <string>Продолжительность видео/всех видео плэйлиста</string>
+             <string>Для видео - продолжительность видео; для плэйлиста - продолжительность всех видео плэйлиста</string>
             </property>
             <property name="readOnly">
              <bool>true</bool>
@@ -1299,7 +1299,7 @@
              </font>
             </property>
             <property name="toolTip">
-             <string>Дата загрузки видео/количество видео в плэйлисте</string>
+             <string>Для видео - дата загрузки видео; для плэйлиста - количество видео в плэйлисте</string>
             </property>
             <property name="readOnly">
              <bool>true</bool>

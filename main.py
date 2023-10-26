@@ -234,7 +234,7 @@ class YouLoader(QMainWindow):
             self.quality_line.setText('0 / 1')
             self.load_progress_bar.setValue(0)
             video = YouTube(self.link_line.text())
-            video.register_on_progress_callback(self.on_progress)
+            video.register_lgress_callback(self.on_progress)
             video.register_on_complete_callback(self.on_complete_video)
             if self.format_status == 'video':
                 stream = video.streams.filter(progressive=True, resolution=self.quality_box.currentText(), type=self.format_status)

@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>icon_2.png</normaloff>icon_2.png</iconset>
+    <normaloff>icon_3.png</normaloff>icon_3.png</iconset>
   </property>
   <property name="toolTipDuration">
    <number>2</number>
@@ -159,6 +159,9 @@
           </property>
           <property name="toolTip">
            <string>Поле для поле для ссылки</string>
+          </property>
+          <property name="clearButtonEnabled">
+           <bool>true</bool>
           </property>
          </widget>
         </item>
@@ -402,6 +405,9 @@
             <property name="toolTip">
              <string>Поле для ввода тега</string>
             </property>
+            <property name="clearButtonEnabled">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
           <item>
@@ -438,6 +444,9 @@
             </property>
             <property name="toolTip">
              <string>Поле для ввода тега</string>
+            </property>
+            <property name="clearButtonEnabled">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -534,6 +543,9 @@
             <property name="toolTip">
              <string>Поле для ввода тега</string>
             </property>
+            <property name="clearButtonEnabled">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
           <item>
@@ -570,6 +582,9 @@
             </property>
             <property name="toolTip">
              <string>Поле для ввода тега</string>
+            </property>
+            <property name="clearButtonEnabled">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -666,6 +681,9 @@
             <property name="toolTip">
              <string>Поле для ввода тега</string>
             </property>
+            <property name="clearButtonEnabled">
+             <bool>true</bool>
+            </property>
            </widget>
           </item>
           <item>
@@ -702,6 +720,9 @@
             </property>
             <property name="toolTip">
              <string>Поле для ввода тега</string>
+            </property>
+            <property name="clearButtonEnabled">
+             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -847,6 +868,9 @@
           <property name="toolTip">
            <string>Поле путя для файла</string>
           </property>
+          <property name="clearButtonEnabled">
+           <bool>true</bool>
+          </property>
          </widget>
         </item>
         <item>
@@ -922,7 +946,7 @@
            <string>Количество загружаемых и загруженных файлов</string>
           </property>
           <property name="inputMask">
-           <string>000 / 000</string>
+           <string>0000 / 0000</string>
           </property>
           <property name="text">
            <string> / </string>
@@ -984,7 +1008,7 @@
          <widget class="QLineEdit" name="remaining_time_line">
           <property name="minimumSize">
            <size>
-            <width>100</width>
+            <width>130</width>
             <height>20</height>
            </size>
           </property>
@@ -1003,7 +1027,7 @@
            <string>Оставшиеся время до полной загрузки файла</string>
           </property>
           <property name="inputMask">
-           <string>0 мин. 0 сек.</string>
+           <string>0000 мин. 0000 сек.</string>
           </property>
           <property name="text">
            <string> мин.  сек.</string>
@@ -1012,7 +1036,7 @@
            <set>Qt::AlignCenter</set>
           </property>
           <property name="readOnly">
-           <bool>true</bool>
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -1020,7 +1044,7 @@
          <widget class="QLineEdit" name="internet_speed_line">
           <property name="minimumSize">
            <size>
-            <width>80</width>
+            <width>90</width>
             <height>20</height>
            </size>
           </property>
@@ -1039,16 +1063,22 @@
            <string>Примерная скорость загрузки файла</string>
           </property>
           <property name="inputMask">
-           <string>0 мб./сек.</string>
+           <string>0000 мб./сек.</string>
           </property>
           <property name="text">
            <string> мб./сек.</string>
+          </property>
+          <property name="frame">
+           <bool>true</bool>
           </property>
           <property name="alignment">
            <set>Qt::AlignCenter</set>
           </property>
           <property name="readOnly">
            <bool>true</bool>
+          </property>
+          <property name="clearButtonEnabled">
+           <bool>false</bool>
           </property>
          </widget>
         </item>
@@ -1123,60 +1153,6 @@
         </item>
         <item>
          <layout class="QGridLayout" name="description_layout">
-          <item row="0" column="1">
-           <widget class="QLineEdit" name="title_line">
-            <property name="minimumSize">
-             <size>
-              <width>260</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>520</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <property name="toolTip">
-             <string>Название видео</string>
-            </property>
-            <property name="text">
-             <string/>
-            </property>
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="3" column="0">
-           <widget class="QLabel" name="additional_label_2">
-            <property name="minimumSize">
-             <size>
-              <width>80</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>80</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Доп. линия:</string>
-            </property>
-           </widget>
-          </item>
           <item row="1" column="0">
            <widget class="QLabel" name="author_label">
             <property name="minimumSize">
@@ -1198,6 +1174,30 @@
             </property>
             <property name="text">
              <string>Автор:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="additional_label_1">
+            <property name="minimumSize">
+             <size>
+              <width>80</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>80</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Доп. линия:</string>
             </property>
            </widget>
           </item>
@@ -1228,8 +1228,35 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="additional_label_1">
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="additional_line_1">
+            <property name="minimumSize">
+             <size>
+              <width>260</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>520</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <pointsize>9</pointsize>
+             </font>
+            </property>
+            <property name="toolTip">
+             <string>Для видео - продолжительность видео; для плэйлиста - продолжительность всех видео плэйлиста</string>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="0">
+           <widget class="QLabel" name="additional_label_2">
             <property name="minimumSize">
              <size>
               <width>80</width>
@@ -1252,17 +1279,17 @@
             </property>
            </widget>
           </item>
-          <item row="2" column="1">
-           <widget class="QLineEdit" name="additional_line_1">
+          <item row="0" column="1">
+           <widget class="QLineEdit" name="title_line">
             <property name="minimumSize">
              <size>
-              <width>130</width>
+              <width>260</width>
               <height>20</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>260</width>
+              <width>520</width>
               <height>20</height>
              </size>
             </property>
@@ -1272,7 +1299,10 @@
              </font>
             </property>
             <property name="toolTip">
-             <string>Для видео - продолжительность видео; для плэйлиста - продолжительность всех видео плэйлиста</string>
+             <string>Название видео</string>
+            </property>
+            <property name="text">
+             <string/>
             </property>
             <property name="readOnly">
              <bool>true</bool>
@@ -1283,13 +1313,13 @@
            <widget class="QLineEdit" name="additional_line_2">
             <property name="minimumSize">
              <size>
-              <width>130</width>
+              <width>260</width>
               <height>20</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>260</width>
+              <width>520</width>
               <height>20</height>
              </size>
             </property>

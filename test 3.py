@@ -1,5 +1,2 @@
-try:
-    a = 1
-    assert a in [2]
-except Exception as e:
-    print(type(Exception()).__name__)
+a = f'{1 / 3:.1f}'
+print(a)

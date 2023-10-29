@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>576</width>
+    <width>690</width>
     <height>560</height>
    </rect>
   </property>
@@ -15,7 +15,7 @@
   </property>
   <property name="windowIcon">
    <iconset>
-    <normaloff>icon_3.png</normaloff>icon_3.png</iconset>
+    <normaloff>icon/icon_3.png</normaloff>icon/icon_3.png</iconset>
   </property>
   <property name="toolTipDuration">
    <number>2</number>
@@ -380,6 +380,9 @@
             </property>
             <property name="toolTip">
              <string>Набор тегов</string>
+            </property>
+            <property name="currentText">
+             <string/>
             </property>
            </widget>
           </item>
@@ -1128,7 +1131,7 @@
          <widget class="QLabel" name="image_label">
           <property name="minimumSize">
            <size>
-            <width>150</width>
+            <width>268</width>
             <height>150</height>
            </size>
           </property>
@@ -1397,13 +1400,13 @@
     </item>
    </layout>
   </widget>
-  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>576</width>
+     <width>690</width>
      <height>21</height>
     </rect>
    </property>
@@ -1411,44 +1414,106 @@
     <property name="title">
      <string>Аккаунт</string>
     </property>
-    <addaction name="action"/>
-    <addaction name="action_2"/>
+    <addaction name="account_enter"/>
+    <addaction name="account_exit"/>
     <addaction name="separator"/>
-    <addaction name="action_4"/>
-   </widget>
-   <widget class="QMenu" name="menu_help">
-    <property name="title">
-     <string>Помощь</string>
-    </property>
+    <addaction name="open_history"/>
+    <addaction name="clear_history"/>
+    <addaction name="save_in_txt"/>
    </widget>
    <widget class="QMenu" name="menu_settings">
     <property name="title">
      <string>Настройки</string>
     </property>
+    <addaction name="slow_inspector"/>
+    <addaction name="fast_inspector"/>
+    <addaction name="separator"/>
+    <addaction name="auto_tag"/>
+    <addaction name="manually_tag"/>
    </widget>
    <widget class="QMenu" name="menu_about_program">
     <property name="title">
      <string>О программе</string>
     </property>
+    <addaction name="open_guide"/>
+    <addaction name="about_author"/>
    </widget>
    <addaction name="menu_account"/>
    <addaction name="menu_settings"/>
-   <addaction name="menu_help"/>
    <addaction name="menu_about_program"/>
   </widget>
-  <action name="action">
+  <action name="account_enter">
+   <property name="enabled">
+    <bool>true</bool>
+   </property>
    <property name="text">
     <string>Вход</string>
    </property>
   </action>
-  <action name="action_2">
+  <action name="account_exit">
    <property name="text">
     <string>Выход</string>
    </property>
   </action>
-  <action name="action_4">
+  <action name="open_history">
+   <property name="checkable">
+    <bool>false</bool>
+   </property>
    <property name="text">
-    <string>История</string>
+    <string>Откртыть историю</string>
+   </property>
+  </action>
+  <action name="inspector_change">
+   <property name="text">
+    <string>Проверка строки при изменении</string>
+   </property>
+  </action>
+  <action name="inspector_enter">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>Проверка строки при нажатии Enter</string>
+   </property>
+  </action>
+  <action name="slow_inspector">
+   <property name="text">
+    <string>Полная проверка качеств плэйлиста</string>
+   </property>
+  </action>
+  <action name="fast_inspector">
+   <property name="text">
+    <string>Быстрая проверка качеств плэйлиста</string>
+   </property>
+  </action>
+  <action name="open_guide">
+   <property name="text">
+    <string>Открыть руководство</string>
+   </property>
+  </action>
+  <action name="clear_history">
+   <property name="text">
+    <string>Очистить историю</string>
+   </property>
+  </action>
+  <action name="save_in_txt">
+   <property name="text">
+    <string>Сохранить историю в .txt</string>
+   </property>
+  </action>
+  <action name="auto_tag">
+   <property name="text">
+    <string>Загрузка тегов автоматически</string>
+   </property>
+  </action>
+  <action name="manually_tag">
+   <property name="text">
+    <string>Загрузка тегов в ручную</string>
+   </property>
+  </action>
+  <action name="about_author">
+   <property name="text">
+    <string>Заслуги</string>
    </property>
   </action>
  </widget>

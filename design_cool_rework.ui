@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>690</width>
-    <height>560</height>
+    <width>666</width>
+    <height>536</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,6 +19,11 @@
   </property>
   <property name="toolTipDuration">
    <number>2</number>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QMainWindow{
+	background-color: white;
+}</string>
   </property>
   <property name="iconSize">
    <size>
@@ -52,6 +57,9 @@
          <layout class="QVBoxLayout" name="left_settings_layout">
           <item>
            <widget class="QComboBox" name="type_box">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
             <property name="minimumSize">
              <size>
               <width>80</width>
@@ -66,11 +74,34 @@
             </property>
             <property name="font">
              <font>
-              <pointsize>9</pointsize>
+              <family>Bahnschrift Light</family>
+              <pointsize>10</pointsize>
              </font>
             </property>
             <property name="cursor">
              <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QComboBox{
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: white;
+	color:  black;
+}
+
+QComboBox::drop-down{
+    background-color:   red;
+	border-radius: 3px;
+}
+QComboBox:disabled {
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: rgb(200, 200, 200);
+	color:  rgb(100, 100, 100);
+}</string>
             </property>
             <property name="editable">
              <bool>false</bool>
@@ -114,17 +145,46 @@
           </property>
           <property name="font">
            <font>
-            <pointsize>9</pointsize>
+            <family>Bahnschrift Light</family>
+            <pointsize>10</pointsize>
            </font>
           </property>
           <property name="cursor">
            <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="layoutDirection">
+           <enum>Qt::LeftToRight</enum>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QComboBox{
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: white;
+	color:  black;
+}
+
+QComboBox::drop-down{
+    background-color:   red;
+	border-radius: 3px;
+}
+QComboBox:disabled {
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: rgb(200, 200, 200);
+	color:  rgb(100, 100, 100);
+}</string>
           </property>
           <property name="maxVisibleItems">
            <number>2</number>
           </property>
           <property name="maxCount">
            <number>2</number>
+          </property>
+          <property name="placeholderText">
+           <string/>
+          </property>
+          <property name="duplicatesEnabled">
+           <bool>false</bool>
           </property>
           <item>
            <property name="text">
@@ -140,6 +200,9 @@
         </item>
         <item row="1" column="3">
          <widget class="QLineEdit" name="link_line">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="minimumSize">
            <size>
             <width>260</width>
@@ -154,11 +217,35 @@
           </property>
           <property name="font">
            <font>
-            <pointsize>9</pointsize>
+            <family>Bahnschrift Light</family>
+            <pointsize>11</pointsize>
            </font>
           </property>
           <property name="toolTip">
            <string>Поле для поле для ссылки</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLineEdit {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1px solid gray;
+} 
+QLineEdit:focus {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1.5px solid gray;
+}
+QLineEdit:disabled {
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: rgb(200, 200, 200);
+	color:  rgb(100, 100, 100);
+}</string>
+          </property>
+          <property name="text">
+           <string/>
           </property>
           <property name="clearButtonEnabled">
            <bool>true</bool>
@@ -167,6 +254,9 @@
         </item>
         <item row="1" column="0">
          <widget class="QPushButton" name="paste_button">
+          <property name="enabled">
+           <bool>true</bool>
+          </property>
           <property name="minimumSize">
            <size>
             <width>80</width>
@@ -181,8 +271,20 @@
           </property>
           <property name="font">
            <font>
-            <pointsize>9</pointsize>
+            <family>Bahnschrift Light</family>
+            <pointsize>10</pointsize>
+            <stylestrategy>PreferDefault</stylestrategy>
+            <kerning>true</kerning>
            </font>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="mouseTracking">
+           <bool>false</bool>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="toolTip">
            <string>Вставить текст в поле для ссылки</string>
@@ -192,6 +294,30 @@
           </property>
           <property name="whatsThis">
            <string/>
+          </property>
+          <property name="autoFillBackground">
+           <bool>false</bool>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1px solid gray;
+}
+QPushButton:hover, 
+QPushButton:focus {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 2px solid gray;
+}
+QPushButton:disabled {
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: rgb(200, 200, 200);
+	color:  rgb(100, 100, 100);
+}</string>
           </property>
           <property name="inputMethodHints">
            <set>Qt::ImhNone</set>
@@ -223,14 +349,41 @@
           </property>
           <property name="font">
            <font>
-            <pointsize>9</pointsize>
+            <family>Bahnschrift Light</family>
+            <pointsize>10</pointsize>
            </font>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="toolTip">
            <string>Копировать текст из поля для ссылки</string>
           </property>
           <property name="layoutDirection">
            <enum>Qt::RightToLeft</enum>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1px solid gray;
+}
+QPushButton:hover, QPushButton:focus {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 2px solid gray;
+}
+QPushButton:disabled {
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: rgb(200, 200, 200);
+	color:  rgb(100, 100, 100);
+}</string>
           </property>
           <property name="text">
            <string>Копировать</string>
@@ -255,7 +408,8 @@
             </property>
             <property name="font">
              <font>
-              <pointsize>9</pointsize>
+              <family>Bahnschrift Light</family>
+              <pointsize>10</pointsize>
              </font>
             </property>
             <property name="text">
@@ -278,6 +432,12 @@
           </item>
           <item>
            <widget class="QLabel" name="link_line_accuracy">
+            <property name="font">
+             <font>
+              <family>Bahnschrift Light</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
             <property name="text">
              <string/>
             </property>
@@ -312,8 +472,12 @@
             </property>
             <property name="font">
              <font>
-              <pointsize>9</pointsize>
+              <family>Bahnschrift Light</family>
+              <pointsize>10</pointsize>
              </font>
+            </property>
+            <property name="styleSheet">
+             <string notr="true"/>
             </property>
             <property name="text">
              <string>формат -</string>
@@ -372,7 +536,8 @@
             </property>
             <property name="font">
              <font>
-              <pointsize>9</pointsize>
+              <family>Bahnschrift Light</family>
+              <pointsize>10</pointsize>
              </font>
             </property>
             <property name="cursor">
@@ -380,6 +545,28 @@
             </property>
             <property name="toolTip">
              <string>Набор тегов</string>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QComboBox{
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: white;
+	color:  black;
+}
+
+QComboBox::drop-down{
+    background-color:   red;
+	border-radius: 3px;
+}
+QComboBox:disabled {
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: rgb(200, 200, 200);
+	color:  rgb(100, 100, 100);
+}</string>
             </property>
             <property name="currentText">
              <string/>
@@ -402,11 +589,38 @@
             </property>
             <property name="font">
              <font>
-              <pointsize>9</pointsize>
+              <family>Bahnschrift Light</family>
+              <pointsize>10</pointsize>
              </font>
             </property>
             <property name="toolTip">
              <string>Поле для ввода тега</string>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLineEdit {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1px solid gray;
+} 
+QLineEdit:focus {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1.5px solid gray;
+}
+QLineEdit:disabled {
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: rgb(200, 200, 200);
+	color:  rgb(100, 100, 100);
+}</string>
+            </property>
+            <property name="cursorMoveStyle">
+             <enum>Qt::LogicalMoveStyle</enum>
             </property>
             <property name="clearButtonEnabled">
              <bool>true</bool>
@@ -442,11 +656,35 @@
             </property>
             <property name="font">
              <font>
-              <pointsize>9</pointsize>
+              <family>Bahnschrift Light</family>
+              <pointsize>10</pointsize>
              </font>
             </property>
             <property name="toolTip">
              <string>Поле для ввода тега</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLineEdit {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1px solid gray;
+} 
+QLineEdit:focus {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1.5px solid gray;
+}
+QLineEdit:disabled {
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: rgb(200, 200, 200);
+	color:  rgb(100, 100, 100);
+}</string>
+            </property>
+            <property name="alignment">
+             <set>Qt::AlignLeading|Qt::AlignLeft|Qt::AlignVCenter</set>
             </property>
             <property name="clearButtonEnabled">
              <bool>true</bool>
@@ -469,7 +707,8 @@
             </property>
             <property name="font">
              <font>
-              <pointsize>9</pointsize>
+              <family>Bahnschrift Light</family>
+              <pointsize>10</pointsize>
              </font>
             </property>
             <property name="cursor">
@@ -477,6 +716,25 @@
             </property>
             <property name="toolTip">
              <string>Набор тегов</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QComboBox{
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: white;
+	color:  black;
+}
+
+QComboBox::drop-down{
+    background-color:   red;
+	border-radius: 3px;
+}
+QComboBox:disabled {
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: rgb(200, 200, 200);
+	color:  rgb(100, 100, 100);
+}</string>
             </property>
            </widget>
           </item>
@@ -513,7 +771,8 @@
             </property>
             <property name="font">
              <font>
-              <pointsize>9</pointsize>
+              <family>Bahnschrift Light</family>
+              <pointsize>10</pointsize>
              </font>
             </property>
             <property name="cursor">
@@ -521,6 +780,28 @@
             </property>
             <property name="toolTip">
              <string>Набор тегов</string>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QComboBox{
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: white;
+	color:  black;
+}
+
+QComboBox::drop-down{
+    background-color:   red;
+	border-radius: 3px;
+}
+QComboBox:disabled {
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: rgb(200, 200, 200);
+	color:  rgb(100, 100, 100);
+}</string>
             </property>
            </widget>
           </item>
@@ -540,11 +821,38 @@
             </property>
             <property name="font">
              <font>
-              <pointsize>9</pointsize>
+              <family>Bahnschrift Light</family>
+              <pointsize>10</pointsize>
              </font>
             </property>
             <property name="toolTip">
              <string>Поле для ввода тега</string>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLineEdit {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1px solid gray;
+} 
+QLineEdit:focus {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1.5px solid gray;
+}
+QLineEdit:disabled {
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: rgb(200, 200, 200);
+	color:  rgb(100, 100, 100);
+}</string>
+            </property>
+            <property name="cursorMoveStyle">
+             <enum>Qt::LogicalMoveStyle</enum>
             </property>
             <property name="clearButtonEnabled">
              <bool>true</bool>
@@ -566,6 +874,9 @@
           </item>
           <item>
            <widget class="QLineEdit" name="tag_line_4">
+            <property name="enabled">
+             <bool>true</bool>
+            </property>
             <property name="minimumSize">
              <size>
               <width>120</width>
@@ -580,11 +891,32 @@
             </property>
             <property name="font">
              <font>
-              <pointsize>9</pointsize>
+              <family>Bahnschrift Light</family>
+              <pointsize>10</pointsize>
              </font>
             </property>
             <property name="toolTip">
              <string>Поле для ввода тега</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLineEdit {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1px solid gray;
+} 
+QLineEdit:focus {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1.5px solid gray;
+}
+QLineEdit:disabled {
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: rgb(200, 200, 200);
+	color:  rgb(100, 100, 100);
+}</string>
             </property>
             <property name="clearButtonEnabled">
              <bool>true</bool>
@@ -607,7 +939,8 @@
             </property>
             <property name="font">
              <font>
-              <pointsize>9</pointsize>
+              <family>Bahnschrift Light</family>
+              <pointsize>10</pointsize>
              </font>
             </property>
             <property name="cursor">
@@ -615,6 +948,25 @@
             </property>
             <property name="toolTip">
              <string>Набор тегов</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QComboBox{
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: white;
+	color:  black;
+}
+
+QComboBox::drop-down{
+    background-color:   red;
+	border-radius: 3px;
+}
+QComboBox:disabled {
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: rgb(200, 200, 200);
+	color:  rgb(100, 100, 100);
+}</string>
             </property>
            </widget>
           </item>
@@ -651,7 +1003,8 @@
             </property>
             <property name="font">
              <font>
-              <pointsize>9</pointsize>
+              <family>Bahnschrift Light</family>
+              <pointsize>10</pointsize>
              </font>
             </property>
             <property name="cursor">
@@ -659,6 +1012,28 @@
             </property>
             <property name="toolTip">
              <string>Набор тегов</string>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QComboBox{
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: white;
+	color:  black;
+}
+
+QComboBox::drop-down{
+    background-color:   red;
+	border-radius: 3px;
+}
+QComboBox:disabled {
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: rgb(200, 200, 200);
+	color:  rgb(100, 100, 100);
+}</string>
             </property>
            </widget>
           </item>
@@ -678,11 +1053,38 @@
             </property>
             <property name="font">
              <font>
-              <pointsize>9</pointsize>
+              <family>Bahnschrift Light</family>
+              <pointsize>10</pointsize>
              </font>
             </property>
             <property name="toolTip">
              <string>Поле для ввода тега</string>
+            </property>
+            <property name="layoutDirection">
+             <enum>Qt::RightToLeft</enum>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLineEdit {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1px solid gray;
+} 
+QLineEdit:focus {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1.5px solid gray;
+}
+QLineEdit:disabled {
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: rgb(200, 200, 200);
+	color:  rgb(100, 100, 100);
+}</string>
+            </property>
+            <property name="cursorMoveStyle">
+             <enum>Qt::LogicalMoveStyle</enum>
             </property>
             <property name="clearButtonEnabled">
              <bool>true</bool>
@@ -718,11 +1120,32 @@
             </property>
             <property name="font">
              <font>
-              <pointsize>9</pointsize>
+              <family>Bahnschrift Light</family>
+              <pointsize>10</pointsize>
              </font>
             </property>
             <property name="toolTip">
              <string>Поле для ввода тега</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLineEdit {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1px solid gray;
+} 
+QLineEdit:focus {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1.5px solid gray;
+}
+QLineEdit:disabled {
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: rgb(200, 200, 200);
+	color:  rgb(100, 100, 100);
+}</string>
             </property>
             <property name="clearButtonEnabled">
              <bool>true</bool>
@@ -745,7 +1168,8 @@
             </property>
             <property name="font">
              <font>
-              <pointsize>9</pointsize>
+              <family>Bahnschrift Light</family>
+              <pointsize>10</pointsize>
              </font>
             </property>
             <property name="cursor">
@@ -753,6 +1177,25 @@
             </property>
             <property name="toolTip">
              <string>Набор тегов</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QComboBox{
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: white;
+	color:  black;
+}
+
+QComboBox::drop-down{
+    background-color:   red;
+	border-radius: 3px;
+}
+QComboBox:disabled {
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: rgb(200, 200, 200);
+	color:  rgb(100, 100, 100);
+}</string>
             </property>
            </widget>
           </item>
@@ -816,11 +1259,39 @@
           </property>
           <property name="font">
            <font>
-            <pointsize>9</pointsize>
+            <family>Bahnschrift Light</family>
+            <pointsize>10</pointsize>
            </font>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="toolTip">
            <string>Загрузить файл</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1px solid gray;
+}
+QPushButton:hover, 
+QPushButton:focus {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 2px solid gray;
+}
+QPushButton:disabled {
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: rgb(200, 200, 200);
+	color:  rgb(100, 100, 100);
+}</string>
           </property>
           <property name="text">
            <string>Загрузить</string>
@@ -843,11 +1314,39 @@
           </property>
           <property name="font">
            <font>
-            <pointsize>9</pointsize>
+            <family>Bahnschrift Light</family>
+            <pointsize>10</pointsize>
            </font>
+          </property>
+          <property name="cursor">
+           <cursorShape>PointingHandCursor</cursorShape>
+          </property>
+          <property name="focusPolicy">
+           <enum>Qt::NoFocus</enum>
           </property>
           <property name="toolTip">
            <string>Выбрать путь, где будет находится скаченный файл</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1px solid gray;
+}
+QPushButton:hover, 
+QPushButton:focus {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 2px solid gray;
+}
+QPushButton:disabled {
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: rgb(200, 200, 200);
+	color:  rgb(100, 100, 100);
+}</string>
           </property>
           <property name="text">
            <string>Выбрать путь</string>
@@ -868,8 +1367,34 @@
             <height>20</height>
            </size>
           </property>
+          <property name="font">
+           <font>
+            <family>Bahnschrift Light</family>
+            <pointsize>11</pointsize>
+           </font>
+          </property>
           <property name="toolTip">
            <string>Поле путя для файла</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLineEdit {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1px solid gray;
+} 
+QLineEdit:focus {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1.5px solid gray;
+}
+QLineEdit:disabled {
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: rgb(200, 200, 200);
+	color:  rgb(100, 100, 100);
+}</string>
           </property>
           <property name="clearButtonEnabled">
            <bool>true</bool>
@@ -892,7 +1417,8 @@
           </property>
           <property name="font">
            <font>
-            <pointsize>9</pointsize>
+            <family>Bahnschrift Light</family>
+            <pointsize>10</pointsize>
            </font>
           </property>
           <property name="cursor">
@@ -903,6 +1429,25 @@
           </property>
           <property name="toolTip">
            <string>Набор возможных качеств</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QComboBox{
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: white;
+	color:  black;
+}
+
+QComboBox::drop-down{
+    background-color:   red;
+	border-radius: 3px;
+}
+QComboBox:disabled {
+	border: 1px solid gray;
+	border-radius: 4px;
+	background-color: rgb(200, 200, 200);
+	color:  rgb(100, 100, 100);
+}</string>
           </property>
           <property name="maxVisibleItems">
            <number>5</number>
@@ -928,6 +1473,9 @@
        <layout class="QHBoxLayout" name="load_progress_layout">
         <item>
          <widget class="QLineEdit" name="quality_line">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="minimumSize">
            <size>
             <width>80</width>
@@ -942,11 +1490,23 @@
           </property>
           <property name="font">
            <font>
-            <pointsize>9</pointsize>
+            <family>Bahnschrift Light</family>
+            <pointsize>10</pointsize>
            </font>
+          </property>
+          <property name="cursor">
+           <cursorShape>ArrowCursor</cursorShape>
           </property>
           <property name="toolTip">
            <string>Количество загружаемых и загруженных файлов</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLineEdit {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1px solid gray;
+} </string>
           </property>
           <property name="inputMask">
            <string>0000 / 0000</string>
@@ -984,11 +1544,23 @@
           <property name="toolTip">
            <string>Шкала прогресса загрузки файла</string>
           </property>
+          <property name="styleSheet">
+           <string notr="true">QProgressBar {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1px solid gray;
+} 
+QProgressBar::chunk {
+background-color: red;
+border-radius: 4px;
+}</string>
+          </property>
           <property name="value">
            <number>0</number>
           </property>
           <property name="alignment">
-           <set>Qt::AlignBottom|Qt::AlignHCenter</set>
+           <set>Qt::AlignCenter</set>
           </property>
           <property name="textVisible">
            <bool>true</bool>
@@ -1009,6 +1581,9 @@
         </item>
         <item>
          <widget class="QLineEdit" name="remaining_time_line">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="minimumSize">
            <size>
             <width>130</width>
@@ -1023,11 +1598,23 @@
           </property>
           <property name="font">
            <font>
-            <pointsize>9</pointsize>
+            <family>Bahnschrift Light</family>
+            <pointsize>10</pointsize>
            </font>
+          </property>
+          <property name="cursor">
+           <cursorShape>ArrowCursor</cursorShape>
           </property>
           <property name="toolTip">
            <string>Оставшиеся время до полной загрузки файла</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLineEdit {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1px solid gray;
+} </string>
           </property>
           <property name="inputMask">
            <string>0000 мин. 0000 сек.</string>
@@ -1045,6 +1632,9 @@
         </item>
         <item>
          <widget class="QLineEdit" name="internet_speed_line">
+          <property name="enabled">
+           <bool>false</bool>
+          </property>
           <property name="minimumSize">
            <size>
             <width>90</width>
@@ -1059,11 +1649,23 @@
           </property>
           <property name="font">
            <font>
-            <pointsize>9</pointsize>
+            <family>Bahnschrift Light</family>
+            <pointsize>10</pointsize>
            </font>
+          </property>
+          <property name="cursor">
+           <cursorShape>ArrowCursor</cursorShape>
           </property>
           <property name="toolTip">
            <string>Примерная скорость загрузки файла</string>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QLineEdit {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1px solid gray;
+} </string>
           </property>
           <property name="inputMask">
            <string>0000 мб./сек.</string>
@@ -1146,6 +1748,9 @@
             <pointsize>9</pointsize>
            </font>
           </property>
+          <property name="cursor">
+           <cursorShape>ArrowCursor</cursorShape>
+          </property>
           <property name="toolTip">
            <string>Превью видео</string>
           </property>
@@ -1156,6 +1761,90 @@
         </item>
         <item>
          <layout class="QGridLayout" name="description_layout">
+          <item row="2" column="1">
+           <widget class="QLineEdit" name="additional_line_1">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>260</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>520</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Bahnschrift Light</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="cursor">
+             <cursorShape>ArrowCursor</cursorShape>
+            </property>
+            <property name="toolTip">
+             <string>Для видео - продолжительность видео; для плэйлиста - продолжительность всех видео плэйлиста</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLineEdit {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1px solid gray;
+} </string>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
+          <item row="3" column="1">
+           <widget class="QLineEdit" name="additional_line_2">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>260</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>520</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Bahnschrift Light</family>
+              <pointsize>10</pointsize>
+             </font>
+            </property>
+            <property name="cursor">
+             <cursorShape>ArrowCursor</cursorShape>
+            </property>
+            <property name="toolTip">
+             <string>Для видео - дата загрузки видео; для плэйлиста - количество видео в плэйлисте</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLineEdit {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1px solid gray;
+} </string>
+            </property>
+            <property name="readOnly">
+             <bool>true</bool>
+            </property>
+           </widget>
+          </item>
           <item row="1" column="0">
            <widget class="QLabel" name="author_label">
             <property name="minimumSize">
@@ -1172,89 +1861,12 @@
             </property>
             <property name="font">
              <font>
-              <pointsize>9</pointsize>
+              <family>Bahnschrift Light</family>
+              <pointsize>11</pointsize>
              </font>
             </property>
             <property name="text">
              <string>Автор:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="0">
-           <widget class="QLabel" name="additional_label_1">
-            <property name="minimumSize">
-             <size>
-              <width>80</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>80</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <property name="text">
-             <string>Доп. линия:</string>
-            </property>
-           </widget>
-          </item>
-          <item row="1" column="1">
-           <widget class="QLineEdit" name="author_line">
-            <property name="minimumSize">
-             <size>
-              <width>260</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>520</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <property name="toolTip">
-             <string>Автор видео</string>
-            </property>
-            <property name="readOnly">
-             <bool>true</bool>
-            </property>
-           </widget>
-          </item>
-          <item row="2" column="1">
-           <widget class="QLineEdit" name="additional_line_1">
-            <property name="minimumSize">
-             <size>
-              <width>260</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="maximumSize">
-             <size>
-              <width>520</width>
-              <height>20</height>
-             </size>
-            </property>
-            <property name="font">
-             <font>
-              <pointsize>9</pointsize>
-             </font>
-            </property>
-            <property name="toolTip">
-             <string>Для видео - продолжительность видео; для плэйлиста - продолжительность всех видео плэйлиста</string>
-            </property>
-            <property name="readOnly">
-             <bool>true</bool>
             </property>
            </widget>
           </item>
@@ -1274,7 +1886,8 @@
             </property>
             <property name="font">
              <font>
-              <pointsize>9</pointsize>
+              <family>Bahnschrift Light</family>
+              <pointsize>11</pointsize>
              </font>
             </property>
             <property name="text">
@@ -1284,6 +1897,9 @@
           </item>
           <item row="0" column="1">
            <widget class="QLineEdit" name="title_line">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="minimumSize">
              <size>
               <width>260</width>
@@ -1298,11 +1914,23 @@
             </property>
             <property name="font">
              <font>
-              <pointsize>9</pointsize>
+              <family>Bahnschrift Light</family>
+              <pointsize>10</pointsize>
              </font>
+            </property>
+            <property name="cursor">
+             <cursorShape>ArrowCursor</cursorShape>
             </property>
             <property name="toolTip">
              <string>Название видео</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLineEdit {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1px solid gray;
+} </string>
             </property>
             <property name="text">
              <string/>
@@ -1312,8 +1940,11 @@
             </property>
            </widget>
           </item>
-          <item row="3" column="1">
-           <widget class="QLineEdit" name="additional_line_2">
+          <item row="1" column="1">
+           <widget class="QLineEdit" name="author_line">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="minimumSize">
              <size>
               <width>260</width>
@@ -1328,11 +1959,23 @@
             </property>
             <property name="font">
              <font>
-              <pointsize>9</pointsize>
+              <family>Bahnschrift Light</family>
+              <pointsize>10</pointsize>
              </font>
             </property>
+            <property name="cursor">
+             <cursorShape>ArrowCursor</cursorShape>
+            </property>
             <property name="toolTip">
-             <string>Для видео - дата загрузки видео; для плэйлиста - количество видео в плэйлисте</string>
+             <string>Автор видео</string>
+            </property>
+            <property name="styleSheet">
+             <string notr="true">QLineEdit {
+	background-color: white;
+	color: black;
+	border-radius: 4px;
+	border: 1px solid gray;
+} </string>
             </property>
             <property name="readOnly">
              <bool>true</bool>
@@ -1355,11 +1998,37 @@
             </property>
             <property name="font">
              <font>
-              <pointsize>9</pointsize>
+              <family>Bahnschrift Light</family>
+              <pointsize>11</pointsize>
              </font>
             </property>
             <property name="text">
              <string>Название:</string>
+            </property>
+           </widget>
+          </item>
+          <item row="2" column="0">
+           <widget class="QLabel" name="additional_label_1">
+            <property name="minimumSize">
+             <size>
+              <width>80</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="maximumSize">
+             <size>
+              <width>80</width>
+              <height>20</height>
+             </size>
+            </property>
+            <property name="font">
+             <font>
+              <family>Bahnschrift Light</family>
+              <pointsize>11</pointsize>
+             </font>
+            </property>
+            <property name="text">
+             <string>Доп. линия:</string>
             </property>
            </widget>
           </item>
@@ -1400,13 +2069,12 @@
     </item>
    </layout>
   </widget>
-  <widget class="QStatusBar" name="statusbar"/>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>690</width>
+     <width>666</width>
      <height>21</height>
     </rect>
    </property>
@@ -1415,10 +2083,12 @@
      <string>Аккаунт</string>
     </property>
     <addaction name="account_enter"/>
-    <addaction name="account_exit"/>
+    <addaction name="exit_account"/>
+    <addaction name="separator"/>
+    <addaction name="create_account"/>
     <addaction name="separator"/>
     <addaction name="open_history"/>
-    <addaction name="clear_history"/>
+    <addaction name="clear"/>
     <addaction name="save_in_txt"/>
    </widget>
    <widget class="QMenu" name="menu_settings">
@@ -1442,6 +2112,7 @@
    <addaction name="menu_settings"/>
    <addaction name="menu_about_program"/>
   </widget>
+  <widget class="QStatusBar" name="statusBar"/>
   <action name="account_enter">
    <property name="enabled">
     <bool>true</bool>
@@ -1449,10 +2120,22 @@
    <property name="text">
     <string>Вход</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Bahnschrift Light</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
   </action>
-  <action name="account_exit">
+  <action name="exit_account">
    <property name="text">
     <string>Выход</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Bahnschrift Light</family>
+     <pointsize>11</pointsize>
+    </font>
    </property>
   </action>
   <action name="open_history">
@@ -1461,6 +2144,12 @@
    </property>
    <property name="text">
     <string>Откртыть историю</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Bahnschrift Light</family>
+     <pointsize>11</pointsize>
+    </font>
    </property>
   </action>
   <action name="inspector_change">
@@ -1480,40 +2169,99 @@
    <property name="text">
     <string>Полная проверка качеств плэйлиста</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Bahnschrift Light</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
   </action>
   <action name="fast_inspector">
    <property name="text">
     <string>Быстрая проверка качеств плэйлиста</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Bahnschrift Light</family>
+     <pointsize>11</pointsize>
+    </font>
    </property>
   </action>
   <action name="open_guide">
    <property name="text">
     <string>Открыть руководство</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Bahnschrift Light</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
   </action>
-  <action name="clear_history">
+  <action name="clear">
    <property name="text">
     <string>Очистить историю</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Bahnschrift Light</family>
+     <pointsize>11</pointsize>
+    </font>
    </property>
   </action>
   <action name="save_in_txt">
    <property name="text">
     <string>Сохранить историю в .txt</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Bahnschrift Light</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
   </action>
   <action name="auto_tag">
    <property name="text">
     <string>Загрузка тегов автоматически</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Bahnschrift Light</family>
+     <pointsize>11</pointsize>
+    </font>
    </property>
   </action>
   <action name="manually_tag">
    <property name="text">
     <string>Загрузка тегов в ручную</string>
    </property>
+   <property name="font">
+    <font>
+     <family>Bahnschrift Light</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
   </action>
   <action name="about_author">
    <property name="text">
     <string>Заслуги</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Bahnschrift Light</family>
+     <pointsize>11</pointsize>
+    </font>
+   </property>
+  </action>
+  <action name="create_account">
+   <property name="text">
+    <string>Создать аккаунт</string>
+   </property>
+   <property name="font">
+    <font>
+     <family>Bahnschrift Light</family>
+     <pointsize>11</pointsize>
+    </font>
    </property>
   </action>
  </widget>

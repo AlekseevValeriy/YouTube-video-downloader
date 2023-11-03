@@ -1,7 +1,9 @@
 from sys import exit, argv
+
 from PyQt5 import uic, QtCore, QtWidgets
-from PyQt5.QtWidgets import QApplication, QDialog
 from PyQt5.QtGui import QPixmap, QImage
+from PyQt5.QtWidgets import QApplication, QDialog
+
 from json_reader import JsonReader
 
 
@@ -15,7 +17,6 @@ class Guide(QDialog):
         slides = JsonReader().read_file('jsons\\images_titles.json')
         self.pages = [slides[i] for i in slides]
 
-
         self.move(0)
 
     def left(self):
@@ -27,8 +28,9 @@ class Guide(QDialog):
     def move(self, number: int):
         self.current_page = (self.current_page + number) % len(self.pages)
         image, image_title = self.pages[self.current_page]
-        self.image_label.setPixmap(QPixmap.fromImage(QImage(image)).scaled(500, 480))
+        self.image_label.setPixmap(QPixmap.fromImage(QImage(image)).scaled(600, 490))
         self.text_line.setText(image_title)
+
 
 if __name__ == '__main__':
     if hasattr(QtCore.Qt, 'AA_EnableHighDpiScaling'):

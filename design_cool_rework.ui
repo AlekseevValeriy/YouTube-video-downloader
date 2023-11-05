@@ -524,13 +524,13 @@ QPushButton:disabled {
            <widget class="QComboBox" name="tags_box_1">
             <property name="minimumSize">
              <size>
-              <width>100</width>
+              <width>140</width>
               <height>20</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>100</width>
+              <width>160</width>
               <height>20</height>
              </size>
             </property>
@@ -577,7 +577,7 @@ QComboBox:disabled {
            <widget class="QLineEdit" name="tag_line_1">
             <property name="minimumSize">
              <size>
-              <width>120</width>
+              <width>140</width>
               <height>20</height>
              </size>
             </property>
@@ -644,7 +644,7 @@ QLineEdit:disabled {
            <widget class="QLineEdit" name="tag_line_2">
             <property name="minimumSize">
              <size>
-              <width>120</width>
+              <width>140</width>
               <height>20</height>
              </size>
             </property>
@@ -695,13 +695,13 @@ QLineEdit:disabled {
            <widget class="QComboBox" name="tags_box_2">
             <property name="minimumSize">
              <size>
-              <width>100</width>
+              <width>140</width>
               <height>20</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>100</width>
+              <width>160</width>
               <height>20</height>
              </size>
             </property>
@@ -759,13 +759,13 @@ QComboBox:disabled {
            <widget class="QComboBox" name="tags_box_3">
             <property name="minimumSize">
              <size>
-              <width>100</width>
+              <width>140</width>
               <height>20</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>100</width>
+              <width>160</width>
               <height>20</height>
              </size>
             </property>
@@ -809,7 +809,7 @@ QComboBox:disabled {
            <widget class="QLineEdit" name="tag_line_3">
             <property name="minimumSize">
              <size>
-              <width>120</width>
+              <width>140</width>
               <height>20</height>
              </size>
             </property>
@@ -879,7 +879,7 @@ QLineEdit:disabled {
             </property>
             <property name="minimumSize">
              <size>
-              <width>120</width>
+              <width>140</width>
               <height>20</height>
              </size>
             </property>
@@ -927,13 +927,13 @@ QLineEdit:disabled {
            <widget class="QComboBox" name="tags_box_4">
             <property name="minimumSize">
              <size>
-              <width>100</width>
+              <width>140</width>
               <height>20</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>100</width>
+              <width>160</width>
               <height>20</height>
              </size>
             </property>
@@ -991,13 +991,13 @@ QComboBox:disabled {
            <widget class="QComboBox" name="tags_box_5">
             <property name="minimumSize">
              <size>
-              <width>100</width>
+              <width>140</width>
               <height>20</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>100</width>
+              <width>160</width>
               <height>20</height>
              </size>
             </property>
@@ -1041,7 +1041,7 @@ QComboBox:disabled {
            <widget class="QLineEdit" name="tag_line_5">
             <property name="minimumSize">
              <size>
-              <width>120</width>
+              <width>140</width>
               <height>20</height>
              </size>
             </property>
@@ -1108,7 +1108,7 @@ QLineEdit:disabled {
            <widget class="QLineEdit" name="tag_line_6">
             <property name="minimumSize">
              <size>
-              <width>120</width>
+              <width>140</width>
               <height>20</height>
              </size>
             </property>
@@ -1156,13 +1156,13 @@ QLineEdit:disabled {
            <widget class="QComboBox" name="tags_box_6">
             <property name="minimumSize">
              <size>
-              <width>100</width>
+              <width>140</width>
               <height>20</height>
              </size>
             </property>
             <property name="maximumSize">
              <size>
-              <width>100</width>
+              <width>160</width>
               <height>20</height>
              </size>
             </property>

@@ -11,10 +11,11 @@ from pydub import AudioSegment
 from pytube import YouTube, Playlist
 from requests import get
 
-from account_enter import AccountEnter
+from account_action import AccountAction
 from credits import Credits
 from guide import Guide
 from json_reader import JsonReader
+from user_history import UserHistory
 
 
 class YoTuViLo(QMainWindow):
@@ -26,6 +27,15 @@ class YoTuViLo(QMainWindow):
         self.errors_box = []
         self.errors_presets = JsonReader().read_file('jsons\\errors_presets.json')
         self.settings_presets = JsonReader().read_file('jsons\\settings_presets.json')
+        self.id3_tags = JsonReader().read_file('jsons\\id3_tags.json')
+        self.mp4_tags = JsonReader().read_file('jsons\\mp4_tags.json')
+        self.temporary_tags = {}
+        self.line_tag_dict = {'tag_line_1': self.tags_box_1, 'tag_line_2': self.tags_box_2,
+                              'tag_line_3': self.tags_box_3, 'tag_line_4': self.tags_box_4,
+                              'tag_line_5': self.tags_box_5, 'tag_line_6': self.tags_box_6}
+        self.box_tag_dict = {'tags_box_1': self.tag_line_1, 'tags_box_2': self.tag_line_2,
+                             'tags_box_3': self.tag_line_3, 'tags_box_4': self.tag_line_4,
+                             'tags_box_5': self.tag_line_5, 'tags_box_6': self.tag_line_6}
         self.flags_box = {'li_in_fl': True, 'qu_bo_fl': True, 'pr_di_fl': True}
         self.file_characteristic = {'url': '', 'type': 'видео', 'format': 'видео'}
         self.cache_box = {'last_downloaded_bytes': 0, 'p_progress': 0, 'quality_line': [0, 0]}
@@ -38,6 +48,12 @@ class YoTuViLo(QMainWindow):
         self.quality_box.currentTextChanged.connect(self.set_quality)
         self.choice_path_button.clicked.connect(self.choice_path)
         self.load_button.clicked.connect(self.load_thread)
+        self.tag_line_1.textEdited.connect(self.tag_saver)
+        self.tag_line_2.textEdited.connect(self.tag_saver)
+        self.tag_line_3.textEdited.connect(self.tag_saver)
+        self.tag_line_4.textEdited.connect(self.tag_saver)
+        self.tag_line_5.textEdited.connect(self.tag_saver)
+        self.tag_line_6.textEdited.connect(self.tag_saver)
 
         self.link_line.editingFinished.connect(self.line_inspector_thread)
 
@@ -63,6 +79,14 @@ class YoTuViLo(QMainWindow):
         self.change_inspector_speed(self.settings_presets['quality_inspector'])
         self.change_setting_tags(self.settings_presets['setting_tags'])
         self.change_account_status()
+        self.change_status_tags_sector(False)
+
+        self.tags_box_1.currentTextChanged.connect(self.tag_changer)
+        self.tags_box_2.currentTextChanged.connect(self.tag_changer)
+        self.tags_box_3.currentTextChanged.connect(self.tag_changer)
+        self.tags_box_4.currentTextChanged.connect(self.tag_changer)
+        self.tags_box_5.currentTextChanged.connect(self.tag_changer)
+        self.tags_box_6.currentTextChanged.connect(self.tag_changer)
 
     """menuBar sector"""
 
@@ -99,41 +123,44 @@ class YoTuViLo(QMainWindow):
         self.manually_tag.setEnabled(True)
 
     def open_account_enter(self):
-        w = AccountEnter('Вход в аккаунт')
-        w.show()
-        w.exec_()
-        login = w.successful_login
+        dialog_window = AccountAction('Вход в аккаунт')
+        dialog_window.show()
+        dialog_window.exec_()
+        login = dialog_window.successful_login
         if login:
             self.settings_presets['account_status'] = 'enter'
-            self.settings_presets['account_name'] = w.name
-            self.settings_presets['account_password'] = w.password
+            self.settings_presets['account_name'] = dialog_window.name
+            self.settings_presets['account_type'] = 'user' if not dialog_window.developer_status_user else 'developer'
             self.change_account_status()
 
     def open_create_account(self):
-        w = AccountEnter('Создание аккаунта')
-        w.show()
-        w.exec_()
-        login = w.successful_login
+        dialog_window = AccountAction('Создание аккаунта')
+        dialog_window.show()
+        dialog_window.exec_()
+        login = dialog_window.successful_login
         if login:
             self.settings_presets['account_status'] = 'enter'
-            self.settings_presets['account_name'] = w.name
-            self.settings_presets['account_password'] = w.password
+            self.settings_presets['account_name'] = dialog_window.name
+            self.settings_presets['account_type'] = 'user' if not dialog_window.developer_status_user else 'developer'
             self.change_account_status()
 
     def account_exit(self):
         self.settings_presets['account_status'] = 'dont_enter'
         self.settings_presets['account_name'] = ''
-        self.settings_presets['account_password'] = ''
+        self.settings_presets['account_type'] = ''
         self.change_account_status()
 
     def account_open_history(self):
-        pass
+        dialog_window = UserHistory(self.settings_presets['account_name'], self.settings_presets['account_type'])
+        dialog_window.show()
+        dialog_window.exec_()
+
 
     def account_clear_history(self):
-        pass
+        AccountAction.clear_history(self.settings_presets['account_name'])
 
     def account_save_history(self):
-        pass
+        AccountAction.save_as_txt(self.settings_presets['account_name'])
 
     def change_account_status(self):
         status = self.settings_presets['account_status']
@@ -145,7 +172,6 @@ class YoTuViLo(QMainWindow):
     def change_account_status_enter(self):
         self.account_enter.setEnabled(False)
         self.exit_account.setEnabled(True)
-        self.create_account.setEnabled(True)
         self.open_history.setEnabled(True)
         self.clear.setEnabled(True)
         self.save_in_txt.setEnabled(True)
@@ -153,20 +179,19 @@ class YoTuViLo(QMainWindow):
     def change_account_status_exit(self):
         self.account_enter.setEnabled(True)
         self.exit_account.setEnabled(False)
-        self.create_account.setEnabled(False)
         self.open_history.setEnabled(False)
         self.clear.setEnabled(False)
         self.save_in_txt.setEnabled(False)
 
     def open_credits(self):
-        w = Credits()
-        w.show()
-        w.exec_()
+        dialog_window = Credits()
+        dialog_window.show()
+        dialog_window.exec_()
 
     def open_guidee(self):
-        w = Guide()
-        w.show()
-        w.exec_()
+        dialog_window = Guide()
+        dialog_window.show()
+        dialog_window.exec_()
 
     """decorators sector"""
 
@@ -215,6 +240,7 @@ class YoTuViLo(QMainWindow):
         self.file_characteristic['type'] = self.type_box.currentText()
         self.settings_presets['video_type'] = self.type_box.currentText()
         self.test_print(self.settings_presets['video_type'])
+        self.line_inspector_thread()
         self.test_print(self.file_characteristic['type'])
 
     def set_format(self):
@@ -222,6 +248,8 @@ class YoTuViLo(QMainWindow):
         self.settings_presets['video_format'] = self.format_box.currentText()
         self.test_print(self.settings_presets['video_format'])
         self.test_print(self.file_characteristic['format'])
+        self.line_inspector_thread()
+        self.set_new_tags()
 
     def set_quality(self):
         if self.file_characteristic['format'] == 'видео':
@@ -270,6 +298,8 @@ class YoTuViLo(QMainWindow):
             self.load_progress_bar.setValue(0)
             link = self.link_line.text()
             # self.work_test() # 5 секунд отдыха
+            if not link:
+                raise FileNotFoundError
             if self.file_characteristic['type'] == 'видео':
                 assert YouTube(link)
                 YouTube(link).check_availability()
@@ -280,19 +310,28 @@ class YoTuViLo(QMainWindow):
             self.flags_box['li_in_fl'] = True
             self.flags_box['qu_bo_fl'] = False
             self.flags_box['pr_di_fl'] = False
+            self.change_status_tags_sector(True)
+            self.set_new_tags()
             self.display_metadata_thread()
             self.set_quality_thread()
+        except FileNotFoundError:
+            self.clear_of_all()
+            self.set_text('', 'white')
         except Exception as error:
-            self.interface_set_enable()
+            self.clear_of_all()
             self.set_text(
                 self.errors_presets.get(type(error).__name__, self.errors_presets[type(Exception()).__name__]), 'red')
-            self.clear_url()
-            self.description_clear()
-            self.preview_clear()
-            self.clear_qualities()
             raise error
         finally:
             self.flags_box['li_in_fl'] = True
+
+    def clear_of_all(self):
+        self.change_status_tags_sector(False)
+        self.interface_set_enable()
+        self.clear_url()
+        self.description_clear()
+        self.preview_clear()
+        self.clear_qualities()
 
     def line_inspector_thread(self):
         if bool(self.flags_box['li_in_fl']):
@@ -303,21 +342,78 @@ class YoTuViLo(QMainWindow):
     '''tags_layout sector'''
 
     # TODO надо сделать через mutagen, там есть mp4, ogg, нужно ещё weba и что-то ещё
+    def tag_changer(self):
+        self.box_tag_dict[self.sender().objectName()].setText(self.temporary_tags[self.sender().currentText()])
+
+    def tag_saver(self):
+        self.temporary_tags[self.line_tag_dict[self.sender().objectName()].currentText()] = self.sender().text()
+        # self.test_print(self.temporary_tags.values())
 
     def get_tags(self, file):
-        format = str(file).split('.')[-1]
-        print(format)
+        file_format = str(file).split('.')[-1]
+        print(file_format)
         file_md = ' '
-        if format in ['mp4', '3gpp']:
+        if file_format in ['mp4', '3gpp']:
             file_md = mp4.MP4(file)
-        elif format in ['mp3']:
+        elif file_format in ['mp3']:
             file_md = id3.ID3(file)
-        elif format == 'webm':
+        elif file_format == 'webm':
             file_w = AudioSegment(file, 'webm')
             file = file.removesuffix('webm') + '.mp3'
             file_w.export(file, 'mp3')
             file_md = id3.ID3(file)
         self.test_print(file_md.pprint())
+
+    def set_new_tags(self):
+        if self.file_characteristic['format'] == 'видео':
+            tags = self.get_keys(self.mp4_tags)
+        elif self.file_characteristic['format'] == 'аудио':
+            tags = self.get_keys(self.id3_tags)
+        self.clear_temporary_tags()
+        self.create_temporary_tags(tags)
+        for n, box in enumerate(self.get_tags_boxes()):
+            box.clear()
+            box.addItems(tags)
+            box.setCurrentIndex(n)
+
+    def get_tags_boxes(self) -> list:
+        return [self.tags_box_1, self.tags_box_2, self.tags_box_3, self.tags_box_4, self.tags_box_5, self.tags_box_6]
+
+    def get_keys(self, d: dict) -> list:
+        return (str(d.keys())[10:-1]).strip('[]').replace("'", '').split(', ')
+
+    def create_temporary_tags(self, tags: list):
+        for tag in tags:
+            self.temporary_tags[tag] = ''
+
+    def clear_temporary_tags(self):
+        self.temporary_tags = {}
+
+    def change_status_tags_sector(self, status: bool):
+        self.tag_line_1.setEnabled(status)
+        self.tag_line_2.setEnabled(status)
+        self.tag_line_3.setEnabled(status)
+        self.tag_line_4.setEnabled(status)
+        self.tag_line_5.setEnabled(status)
+        self.tag_line_6.setEnabled(status)
+        self.tags_box_1.setEnabled(status)
+        self.tags_box_2.setEnabled(status)
+        self.tags_box_3.setEnabled(status)
+        self.tags_box_4.setEnabled(status)
+        self.tags_box_5.setEnabled(status)
+        self.tags_box_6.setEnabled(status)
+
+    def choice_tags_moment(self):
+        if self.file_characteristic['setting_tags'] == 'manually':
+            self.change_status_tags_sector(True)
+            self.set_message('Выбор тэгов, по окончанию выбора нажмите кнопку "Загрузить"', 0)
+        elif self.file_characteristic['setting_tags'] == 'auto':
+            # auto choice
+            pass
+        self.change_status_tags_sector(False)
+        self.set_message('Установка тэгов', 0)
+        # tags_set
+        self.set_new_tags()
 
     '''download_layout sector'''
 
@@ -339,7 +435,7 @@ class YoTuViLo(QMainWindow):
                     stream = video.streams.filter(type='audio', abr=self.quality_box.currentText())
                 self.set_message('Загрузка видео...', 0)
                 stream.first().download(output_path=self.path_line.text())
-
+                # self.choice_tags_moment()
 
             elif self.file_characteristic['type'] == 'плэйлист':
                 playlist = Playlist(self.file_characteristic['url'])
@@ -349,6 +445,7 @@ class YoTuViLo(QMainWindow):
                 for video in playlist:
                     if not self.work_flag:
                         raise Exception
+                    self.save_history(video)
                     video = YouTube(video)
                     video.register_on_progress_callback(self.on_progress)
                     video.register_on_complete_callback(self.on_complete)
@@ -360,6 +457,7 @@ class YoTuViLo(QMainWindow):
                         stream = video.streams.filter(progressive=False, type='audio',
                                                       abr=self.quality_box.currentText())
                     stream.first().download(output_path=self.path_line.text())
+                    # self.choice_tags_moment()
                 self.set_clear()
                 self.set_message('Загрузка завершена')
         except Exception as error:
@@ -367,6 +465,10 @@ class YoTuViLo(QMainWindow):
             raise error
         finally:
             self.interface_set_enable()
+
+    def save_history(self, link):
+        if self.settings_presets['account_status'] == 'enter':
+            AccountAction.add_history(self.settings_presets['account_name'], link)
 
     # @_error_inspector
     # def load_process(self):
@@ -415,12 +517,12 @@ class YoTuViLo(QMainWindow):
         self.test_print(path)
 
     def set_quality_process(self):
-        def get_qualities(video: YouTube) -> list:
+        def get_qualities(youtube_video: YouTube) -> list:
             if self.file_characteristic['format'] == 'видео':
-                streams = video.streams.filter(progressive=True, type='video')
+                streams = youtube_video.streams.filter(progressive=True, type='video')
                 return [stream.resolution for stream in streams]
             elif self.file_characteristic['format'] == 'аудио':
-                streams = video.streams.filter(type='audio')
+                streams = youtube_video.streams.filter(type='audio')
                 return [stream.abr for stream in streams]
 
         try:
@@ -506,8 +608,9 @@ class YoTuViLo(QMainWindow):
         self.set_quality_line_values()
         if self.file_characteristic['type'] == 'видео':
             self.set_clear()
+            self.set_new_tags()
             self.set_message('Загрузка завершена')
-
+            self.save_history(self.file_characteristic['url'])
         self.get_tags(path)
 
     def set_quality_line_values(self):

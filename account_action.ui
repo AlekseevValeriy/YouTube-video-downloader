@@ -69,6 +69,9 @@
          <pointsize>11</pointsize>
         </font>
        </property>
+       <property name="focusPolicy">
+        <enum>Qt::StrongFocus</enum>
+       </property>
        <property name="styleSheet">
         <string notr="true">QLineEdit {
 	background-color: white;
@@ -218,7 +221,7 @@ QLineEdit:disabled {
       </font>
      </property>
      <property name="focusPolicy">
-      <enum>Qt::NoFocus</enum>
+      <enum>Qt::StrongFocus</enum>
      </property>
      <property name="styleSheet">
       <string notr="true">QPushButton {
@@ -261,8 +264,29 @@ QPushButton:disabled {
      </property>
     </spacer>
    </item>
+   <item>
+    <widget class="QLabel" name="status_label">
+     <property name="font">
+      <font>
+       <family>Bahnschrift Light</family>
+       <pointsize>10</pointsize>
+      </font>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>name_line</tabstop>
+  <tabstop>password_line</tabstop>
+  <tabstop>button</tabstop>
+ </tabstops>
  <resources/>
  <connections/>
 </ui>

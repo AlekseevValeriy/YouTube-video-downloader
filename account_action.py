@@ -1,9 +1,13 @@
 import sqlite3
-from sys import exit, argv
 from datetime import datetime
-from PyQt5 import uic, QtCore, QtWidgets
+
+from PyQt5 import uic
 from PyQt5.QtCore import Qt
-from PyQt5.QtWidgets import QApplication, QDialog
+from PyQt5.QtWidgets import QDialog
+
+"""
+Класс, который открывает окно для входа и создания аккаунта, также работает с историей аккаунта
+"""
 
 
 class AccountAction(QDialog):
@@ -27,28 +31,22 @@ class AccountAction(QDialog):
                 self.developer_status_create = True
                 self.status_label.setText('Вы разработчик')
 
-
     def create_acc_in_db(self):
-        db_users = sqlite3.connect('databases\\users_db.sqlite')
-        db_history = sqlite3.connect('databases\\user_history_db.sqlite')
-        cur_u = db_users.cursor()
-        cur_h = db_history.cursor()
-        coincidences = cur_u.execute("SELECT id FROM users "
-                                     "WHERE user_name like ?", [self.name_line.text()]).fetchall()
+        db = sqlite3.connect('databases\\users_db.sqlite')
+        cur = db.cursor()
+        coincidences = cur.execute("SELECT id FROM users "
+                                   "WHERE user_name like ?", [self.name_line.text()]).fetchall()
         if not coincidences:
             user_status = 'user' if not self.developer_status_create else 'developer'
             user_account_information = [self.name_line.text(), self.password_line.text(), user_status,
                                         datetime.now().strftime('%d.%m.%Y')]
-            cur_u.execute("INSERT INTO users(user_name, user_password, user_type, create_date) "
-                          "VALUES(?, ?, ?, ?)", user_account_information).fetchall()
-            db_users.commit()
-            cur_u.close()
-
+            cur.execute("INSERT INTO users(user_name, user_password, user_type, create_date) "
+                        "VALUES(?, ?, ?, ?)", user_account_information).fetchall()
             user_history_information = [self.name_line.text(), '']
-            cur_h.execute("INSERT INTO users_history(user_name, user_history) "
-                          "VALUES(?, ?)", user_history_information).fetchall()
-            db_history.commit()
-            cur_h.close()
+            cur.execute("INSERT INTO users_history(user_name, user_history) "
+                        "VALUES(?, ?)", user_history_information).fetchall()
+            db.commit()
+            cur.close()
             self.successful_login = True
             self.name = self.name_line.text()
             self.status_label.setText('Вы создали аккаунт')
@@ -63,7 +61,6 @@ class AccountAction(QDialog):
                              "WHERE user_name like ? AND user_password like ?",
                              [self.name_line.text(), self.password_line.text()]).fetchall()
         if result and (result[0][1] != 'developer' or (result[0][1] == 'developer' and self.developer_status_create)):
-            print(result)
             self.successful_login = True
             self.name = self.name_line.text()
             self.password = self.password_line.text()
@@ -86,7 +83,7 @@ class AccountAction(QDialog):
 
     @staticmethod
     def add_history(user_name, link: str):
-        db = sqlite3.connect('databases\\user_history_db.sqlite')
+        db = sqlite3.connect('databases\\users_db.sqlite')
         cur = db.cursor()
         old_history = cur.execute("SELECT user_history FROM users_history "
                                   "WHERE user_name like ?", [user_name]).fetchall()
@@ -100,7 +97,7 @@ class AccountAction(QDialog):
 
     @staticmethod
     def clear_history(user_name):
-        db = sqlite3.connect('databases\\user_history_db.sqlite')
+        db = sqlite3.connect('databases\\users_db.sqlite')
         cur = db.cursor()
         result = cur.execute("UPDATE users_history "
                              "SET user_history = ''"
@@ -110,7 +107,7 @@ class AccountAction(QDialog):
 
     @staticmethod
     def save_as_txt(user_name):
-        db = sqlite3.connect('databases\\user_history_db.sqlite')
+        db = sqlite3.connect('databases\\users_db.sqlite')
         cur = db.cursor()
         history = cur.execute("SELECT user_history FROM users_history "
                               "WHERE user_name like ?", [user_name]).fetchall()
@@ -118,16 +115,3 @@ class AccountAction(QDialog):
         cur.close()
         with open(f'user_history_{user_name}.txt', 'w+', encoding='utf-8') as history_file:
             history_file.write(f'user_history_{user_name}:\n' + history[0][0].replace(';', '\n'))
-            print('ok')
-
-if __name__ == '__main__':
-    if hasattr(QtCore.Qt, 'AA_EnableHighDpiScaling'):
-        QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
-    if hasattr(QtCore.Qt, 'AA_UseHighDpiPixmaps'):
-        QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
-
-    app = QApplication(argv)
-    w = AccountAction('Вход в аккаунт')
-    w.show()
-    exit(app.exec())
-    # AccountAction.add_history(user_name='валера', link='123')

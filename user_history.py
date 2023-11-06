@@ -1,7 +1,11 @@
 import sqlite3
-from sys import exit, argv
-from PyQt5 import uic, QtCore, QtWidgets
-from PyQt5.QtWidgets import QApplication, QDialog
+
+from PyQt5 import uic
+from PyQt5.QtWidgets import QDialog
+
+"""
+Класс, который открывает окно с историей загруженных видео пользователя
+"""
 
 
 class UserHistory(QDialog):
@@ -14,7 +18,7 @@ class UserHistory(QDialog):
         self.set_history()
 
     def set_history(self):
-        db = sqlite3.connect('databases\\user_history_db.sqlite')
+        db = sqlite3.connect('databases\\users_db.sqlite')
         cursor = db.cursor()
         history = cursor.execute("SELECT user_history FROM users_history "
                                  "WHERE user_name like ?", [self.user_name]).fetchall()
@@ -24,15 +28,3 @@ class UserHistory(QDialog):
             history = '\n'.join(history[0][0].split(';')[1:])
         self.history.setText(history)
         cursor.close()
-
-
-if __name__ == '__main__':
-    if hasattr(QtCore.Qt, 'AA_EnableHighDpiScaling'):
-        QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling, True)
-    if hasattr(QtCore.Qt, 'AA_UseHighDpiPixmaps'):
-        QtWidgets.QApplication.setAttribute(QtCore.Qt.AA_UseHighDpiPixmaps, True)
-
-    app = QApplication(argv)
-    w = UserHistory('Валера', 'developer')
-    w.show()
-    exit(app.exec())
